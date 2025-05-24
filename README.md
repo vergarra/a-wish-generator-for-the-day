@@ -1,1 +1,1 @@
-# a-wish-generator-for-the-day
+# A-wish-generator-for-the-day
