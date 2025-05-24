@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор пожеланий на день</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 80%;
+            max-width: 600px;
+            margin: 20px;
+        }
+        
+        h1 {
+            color: #4a69bd;
+            margin-bottom: 30px;
+        }
+        
+        #wish {
+            font-size: 22px;
+            line-height: 1.6;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #4a69bd;
+        }
+        
+        button {
+            background-color: #4a69bd;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(74, 105, 189, 0.3);
+        }
+        
+        button:hover {
+            background-color: #3c58a8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(74, 105, 189, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .emoji {
+            font-size: 24px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ваше персональное пожелание на сегодня <span class="emoji">✨</span></h1>
+        <div id="wish">Нажмите кнопку ниже, чтобы получить пожелание</div>
+        <button onclick="generateWish()">Сгенерировать пожелание</button>
+    </div>
+
+    <script>
+        
+        const wishesData = {
+            starts: ["Пусть", "Желаю", "Пусть сегодня", "Чтобы сегодня", "Мира тебе", "Счастья", "Добра", "Удачи"],
+            middles: ["тебя ждет", "вселенная подарит", "случится", "принесет", "подарит тебе", "откроется", "расцветет"],
+            ends: ["удача!", "радость!", "много счастья!", "успех во всем!", "вдохновение!", "новые возможности!", "гармония!"],
+            special: [
+                "Улыбайся чаще! Сегодня прекрасный день! 😊",
+                "Ты сегодня особенно прекрасен! Пусть день будет волшебным! 🌟",
+                "Сегодня все получится! Верь в себя! 💪",
+                "День как чистый лист — напиши на нем свою историю! ✨",
+                "Пусть ангелы хранят тебя сегодня и всегда! 👼"
+            ],
+            templates: [
+                "{start} {middle} {end}",
+                "{start} {middle} {end} И пусть сбудутся все мечты!",
+                "{start} {middle} {end} Наслаждайся каждым моментом!",
+                "Сегодня {middle} {end} {start} светит солнце для тебя!"
+            ]
+        };
+
+       
+        const emojis = ["✨", "🌟", "💖", "🌞", "🌈", "🌸", "🍀", "🎉"];
+
+        function generateWish() {
+            const wishElement = document.getElementById('wish');
+            const emojiElement = document.querySelector('.emoji');
+            
+        
+            emojiElement.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            
+            wishElement.innerHTML = '<div class="loading">Генерируем пожелание...</div>';
+            
+            
+            setTimeout(() => {
+               
+                if (Math.random() < 0.3) {
+                    const specialWish = wishesData.special[Math.floor(Math.random() * wishesData.special.length)];
+                    wishElement.textContent = specialWish;
+                } else {
+                    
+                    const template = wishesData.templates[Math.floor(Math.random() * wishesData.templates.length)];
+                    
+                   
+                    const wish = template
+                        .replace('{start}', wishesData.starts[Math.floor(Math.random() * wishesData.starts.length)])
+                        .replace('{middle}', wishesData.middles[Math.floor(Math.random() * wishesData.middles.length)])
+                        .replace('{end}', wishesData.ends[Math.floor(Math.random() * wishesData.ends.length)]);
+                    
+                    wishElement.textContent = wish;
+                }
+            }, 800); 
+        }
+
+        
+        window.onload = generateWish;
+    </script>
+</body>
+</html>
